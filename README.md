@@ -20,6 +20,7 @@ The schema includes tables for tracking various health and fitness metrics:
 - Messaging
 - AI integrations
 - Goal tracking
+- User statistics and preferences
 
 ## Files
 
@@ -44,17 +45,39 @@ If you prefer to implement tables individually:
 3. Add indexes for performance optimization
 4. Set up Row Level Security (RLS) policies for each table
 
+## Enhanced Features
+
+### Data Integrity
+
+- CHECK constraints to ensure valid data (e.g., positive values, valid date ranges)
+- Generated columns for calculated fields (e.g., duration, total price)
+- Unique constraints to prevent duplicate entries
+
+### Performance Optimization
+
+- Indexes on frequently queried columns and foreign keys
+- Composite indexes for common query patterns
+- Cascading deletes to maintain referential integrity
+- Views for common complex queries
+
+### Advanced PostgreSQL Features
+
+- Generated columns for calculated fields
+- Array data types for lists (e.g., certifications)
+- JSONB data types for flexible schema (e.g., availability, preferences)
+- Custom functions for common calculations (e.g., BMI, calories burned)
+
 ## Table Relationships
 
 The schema includes proper foreign key relationships between tables:
 
 - User references (all tables link to the Supabase auth.users table)
 - Workout logs to exercise logs
-- Challenges to exercises
+- Challenges to exercises and participants
 - Battles to participants
-- Protocols to steps
+- Protocols to steps and participants
 - Message groups to members and messages
-- Orders to order items
+- Orders to order items and products
 
 ## Security
 
@@ -70,12 +93,97 @@ The schema includes Row Level Security (RLS) policies to ensure users can only:
 - Indexes are created on frequently queried columns
 - Timestamp triggers automatically update the `updated_at` field
 - UUID primary keys for scalability
+- Views for common complex queries
+- Functions for common calculations
 
 ## Extensions
 
 The schema uses the following PostgreSQL extensions:
 
 - `uuid-ossp`: For UUID generation
+
+## New Tables Added
+
+### Core Health & Fitness Tables
+- `meditation_log`: Track user meditation sessions
+- `challenge_participants`: Track users participating in challenges
+- `protocol_participants`: Track users following protocols
+- `products`: Catalog of available products
+- `user_stats`: Track user health metrics over time
+- `user_preferences`: Store user application preferences
+
+### Health Vitals & Tracking Tables
+- `sleep_log`: Comprehensive sleep tracking with quality metrics and environmental factors
+- `vital_signs`: Track heart rate, blood pressure, respiratory rate, and other vital signs
+- `hormone_levels`: Monitor testosterone, cortisol, and other hormone levels
+- `nutrient_levels`: Track vitamins, minerals, and other nutrient levels
+- `body_measurements`: Detailed body measurements beyond basic weight and height
+- `activity_metrics`: Daily activity tracking with recovery and readiness scores
+- `health_assessments`: Health scores, fitness age, and life expectancy predictions
+- `mood_tracking`: Track mood, energy, stress, confidence, and attractiveness
+- `health_goals_progress`: Track progress toward health goals with confidence scores
+- `health_insights`: AI-generated insights from health data
+- `health_chat_sessions`: Track health assessment chat sessions
+- `external_health_data`: Store data imported from Apple Health and other platforms
+- `health_reports`: Generated health reports and analyses
+- `attractiveness_metrics`: Track factors affecting attractiveness and confidence
+- `health_correlations`: Track correlations between different health metrics
+- `apple_health_sync`: Track Apple Health data synchronization status
+
+### AI Agent & Automation Tables
+- `ai_agents`: Define AI coaches and agents with capabilities and base prompts
+- `user_ai_agents`: Link users with their personalized AI agents
+- `agent_goals`: Track goals assigned to AI agents for users
+- `agent_commands`: Log commands and API calls made by AI agents
+- `agent_messages`: Store messages sent by AI agents to users
+- `agent_schedules`: Schedule recurring agent activities
+- `agent_feedback`: Collect user feedback on agent interactions
+
+### Notification & Communication Tables
+- `notifications`: Track push notifications sent to users
+- `notification_devices`: Store user device tokens for push notifications
+- `emails`: Log emails sent to users
+- `email_templates`: Store reusable email templates
+
+### Integration & API Tables
+- `api_integrations`: Configure external API integrations
+- `user_api_integrations`: Link users with their API integration credentials
+- `api_logs`: Log all API calls for auditing and debugging
+- `webhooks`: Configure webhook endpoints for external services
+- `webhook_logs`: Log webhook calls for auditing and debugging
+
+## Expanded Table Fields
+
+The schema includes expanded table fields for more comprehensive data collection and advanced features:
+
+### User-Related Expansions
+- **User Stats**: Added fields for metabolic rate, activity level, medical conditions, sleep quality, and more
+- **Goals**: Enhanced with goal categories, sub-goals, motivation tracking, and AI-assessed difficulty ratings
+
+### Nutrition Expansions
+- **Calories Log**: Expanded with detailed nutritional information, food sourcing, and emotional context
+- **Food Searches**: Added AI confidence scores, alternative identifications, and user feedback
+- **Fasts Log**: Enhanced with mood tracking, ketone/glucose levels, and streak tracking
+
+### Workout Expansions
+- **Workout Log**: Added perceived exertion, heart rate data, recovery metrics, and environmental context
+- **Exercises**: Enhanced with variations, progression paths, safety considerations, and form guidance
+- **Exercise Log**: Added form quality tracking, personal records, and advanced training techniques
+
+### AI Agent Expansions
+- **AI Agents**: Enhanced with personality traits, communication styles, and ethical guidelines
+- **Agent Commands**: Added execution metrics, command chains, and security controls
+- **Agent Messages**: Enhanced with sentiment analysis, engagement scoring, and message optimization
+
+### Notification Expansions
+- **Notifications**: Added delivery tracking, engagement metrics, and presentation customization
+- **Emails**: Enhanced with delivery analytics, client tracking, and A/B testing support
+
+### Integration Expansions
+- **API Integrations**: Added detailed API metadata, compliance information, and fallback behaviors
+- **User API Integrations**: Enhanced with connection status tracking, consent management, and sync preferences
+
+For detailed field listings, see `expanded-table-fields.md` and `expanded-table-fields.sql`.
 
 ## Contributing
 
